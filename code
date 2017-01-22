@@ -1,0 +1,22 @@
+import tweepy
+ 
+CONSUMER_KEY = ''
+CONSUMER_SECRET = ''
+ACCESS_TOKEN = ''
+ACCESS_TOKEN_SECRET = ''
+ 
+auth = tweepy.OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
+auth.set_access_token(ACCESS_TOKEN, ACCESS_TOKEN_SECRET)
+api = tweepy.API(auth)
+ 
+twts = api.search(q="I hope I don't have the flu.")     
+ 
+#list of specific strings we want to check for in Tweets
+t = ["I hope I don't have the flu."]
+ 
+for s in twts:
+    for i in t:
+        if i == s.text:
+            sn = s.user.screen_name
+            m = "@%s Hello! Check out https://vaccinefinder.org/ to find a flu shot near you!" % (sn)
+            s = api.update_status(m, s.id)
